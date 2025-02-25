@@ -23,7 +23,7 @@ services:
       - GITHUB_CALLBACK_URL=${GITHUB_CALLBACK_URL}
     depends_on:
       - mongodb
-    command: npm run dev
+    command: npm run dev -- --host 0.0.0.0
 
   code-runner:
     build:
