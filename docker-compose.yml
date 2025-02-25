@@ -12,7 +12,7 @@ services:
     environment:
       - PORT=3001
       - NODE_ENV=development
-      - MONGODB_URI=mongodb://mongodb:27017/code-challenges
+      - MONGODB_URI=mongodb://localhost:27017/code-challenges
       - JWT_SECRET=${JWT_SECRET}
       - JWT_EXPIRES_IN=7d
       - DOCKER_MEMORY_LIMIT=128m
