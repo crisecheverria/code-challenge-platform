@@ -1,0 +1,44 @@
+{
+  "name": "code-challenge-platform",
+  "version": "0.0.1",
+  "description": "An open-source platform for creating and solving coding challenges",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "docker compose up -d && npm run dev:all",
+    "dev:all": "npm run dev:backend & npm run dev:frontend",
+    "dev:backend": "npm run dev -w packages/backend",
+    "dev:frontend": "npm run dev -w packages/frontend",
+    "build": "npm run build --workspaces",
+    "test": "npm run test --workspaces",
+    "lint": "npm run lint --workspaces",
+    "clean": "npm run clean --workspaces"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/crisecheverria/code-challenge-platform.git"
+  },
+  "keywords": [
+    "coding",
+    "challenges",
+    "education",
+    "learning",
+    "typescript",
+    "react",
+    "node"
+  ],
+  "author": "Cristian Echeverria",
+  "license": "MIT",
+  "bugs": {
+    "url": "git+https://github.com/crisecheverria/code-challenge-platform.git"
+  },
+  "homepage": "https://github.com/crisecheverria/code-challenge-platform#readme",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "@typescript-eslint/parser": "^5.0.0",
+    "eslint": "^8.0.0",
+    "prettier": "^2.0.0",
+    "typescript": "^4.0.0"
+  }
+}
