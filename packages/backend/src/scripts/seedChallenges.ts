@@ -1,0 +1,883 @@
+import { connectDB } from "../db";
+import { ChallengeModel } from "../models/Challenge";
+
+const seedChallenges = async () => {
+  try {
+    await connectDB();
+    // Check if "true" is passed as a command line argument
+    const forceUpdate = process.argv.includes("true");
+    // If forceUpdate is true, clear all existing challenges
+    if (forceUpdate) {
+      await ChallengeModel.deleteMany({});
+      console.log("Cleared existing challenges");
+    }
+
+    // Define challenges for various concepts
+    const challenges = [
+      // Variables challenges
+      {
+        title: "Add Two Numbers",
+        description:
+          "Create a function that takes two numbers and returns their sum.",
+        difficulty: "easy",
+        language: "typescript",
+        functionName: "sum",
+        parameterTypes: ["number", "number"],
+        returnType: "number",
+        template:
+          "function sum(a: number, b: number): number {\n  // Write your code here\n}",
+        testCases: [
+          {
+            input: [1, 2],
+            expected: 3,
+            description: "should add positive numbers",
+          },
+          {
+            input: [-1, 1],
+            expected: 0,
+            description: "should handle negative numbers",
+          },
+          { input: [0, 0], expected: 0, description: "should handle zeros" },
+        ],
+        conceptTags: ["variables", "operators"],
+        timeLimit: 5000,
+        memoryLimit: 128,
+      },
+      {
+        title: "Multiply Two Numbers",
+        description:
+          "Create a function that takes two numbers and returns their product.",
+        difficulty: "easy",
+        language: "typescript",
+        functionName: "multiply",
+        parameterTypes: ["number", "number"],
+        returnType: "number",
+        template:
+          "function multiply(a: number, b: number): number {\n  // Write your code here\n}",
+        testCases: [
+          {
+            input: [2, 3],
+            expected: 6,
+            description: "should multiply positive numbers",
+          },
+          {
+            input: [-2, 3],
+            expected: -6,
+            description: "should handle negative numbers",
+          },
+          { input: [0, 5], expected: 0, description: "should handle zeros" },
+        ],
+        conceptTags: ["variables", "operators"],
+        timeLimit: 5000,
+        memoryLimit: 128,
+      },
+
+      // Conditionals challenges
+      {
+        title: "Check if Number is Even",
+        description:
+          "Create a function that returns true if a number is even, and false if it's odd.",
+        difficulty: "easy",
+        language: "typescript",
+        functionName: "isEven",
+        parameterTypes: ["number"],
+        returnType: "boolean",
+        template:
+          "function isEven(num: number): boolean {\n  // Write your code here\n}",
+        testCases: [
+          {
+            input: [2],
+            expected: true,
+            description: "should return true for even numbers",
+          },
+          {
+            input: [3],
+            expected: false,
+            description: "should return false for odd numbers",
+          },
+          { input: [0], expected: true, description: "should handle zero" },
+          {
+            input: [-4],
+            expected: true,
+            description: "should handle negative even numbers",
+          },
+        ],
+        conceptTags: ["conditionals", "operators"],
+        timeLimit: 5000,
+        memoryLimit: 128,
+      },
+      {
+        title: "Get Absolute Value",
+        description:
+          "Create a function that returns the absolute value of a number.",
+        difficulty: "easy",
+        language: "typescript",
+        functionName: "getAbsoluteValue",
+        parameterTypes: ["number"],
+        returnType: "number",
+        template:
+          "function getAbsoluteValue(num: number): number {\n  // Write your code here\n}",
+        testCases: [
+          {
+            input: [5],
+            expected: 5,
+            description: "should return positive numbers unchanged",
+          },
+          {
+            input: [-5],
+            expected: 5,
+            description: "should convert negative numbers to positive",
+          },
+          { input: [0], expected: 0, description: "should handle zero" },
+        ],
+        conceptTags: ["conditionals", "operators"],
+        timeLimit: 5000,
+        memoryLimit: 128,
+      },
+
+      // Strings challenges
+      {
+        title: "Reverse a String",
+        description: "Create a function that reverses a string.",
+        difficulty: "easy",
+        language: "typescript",
+        functionName: "reverseString",
+        parameterTypes: ["string"],
+        returnType: "string",
+        template:
+          "function reverseString(str: string): string {\n  // Write your code here\n}",
+        testCases: [
+          {
+            input: ["hello"],
+            expected: "olleh",
+            description: "should reverse normal strings",
+          },
+          {
+            input: [""],
+            expected: "",
+            description: "should handle empty strings",
+          },
+          {
+            input: ["a"],
+            expected: "a",
+            description: "should handle single character strings",
+          },
+        ],
+        conceptTags: ["strings", "arrays"],
+        timeLimit: 5000,
+        memoryLimit: 128,
+      },
+      {
+        title: "Count Vowels",
+        description:
+          "Create a function that counts the number of vowels in a string.",
+        difficulty: "easy",
+        language: "typescript",
+        functionName: "countVowels",
+        parameterTypes: ["string"],
+        returnType: "number",
+        template:
+          "function countVowels(str: string): number {\n  // Write your code here\n}",
+        testCases: [
+          {
+            input: ["hello"],
+            expected: 2,
+            description: "should count vowels correctly",
+          },
+          {
+            input: ["aeiou"],
+            expected: 5,
+            description: "should count all vowels",
+          },
+          {
+            input: ["xyz"],
+            expected: 0,
+            description: "should handle strings with no vowels",
+          },
+          {
+            input: [""],
+            expected: 0,
+            description: "should handle empty strings",
+          },
+        ],
+        conceptTags: ["strings", "loops"],
+        timeLimit: 5000,
+        memoryLimit: 128,
+      },
+
+      // Arrays challenges
+      {
+        title: "Find Maximum Value",
+        description:
+          "Create a function that finds the maximum value in an array of numbers.",
+        difficulty: "easy",
+        language: "typescript",
+        functionName: "findMax",
+        parameterTypes: ["number[]"],
+        returnType: "number",
+        template:
+          "function findMax(arr: number[]): number {\n  // Write your code here\n}",
+        testCases: [
+          {
+            input: [[1, 3, 5, 2, 4]],
+            expected: 5,
+            description: "should find max in positive numbers",
+          },
+          {
+            input: [[-1, -3, -5, -2, -4]],
+            expected: -1,
+            description: "should find max in negative numbers",
+          },
+          {
+            input: [[0]],
+            expected: 0,
+            description: "should handle single-element arrays",
+          },
+        ],
+        conceptTags: ["arrays", "loops"],
+        timeLimit: 5000,
+        memoryLimit: 128,
+      },
+      {
+        title: "Filter Even Numbers",
+        description:
+          "Create a function that filters out all odd numbers from an array and returns only the even ones.",
+        difficulty: "medium",
+        language: "typescript",
+        functionName: "filterEvenNumbers",
+        parameterTypes: ["number[]"],
+        returnType: "number[]",
+        template:
+          "function filterEvenNumbers(arr: number[]): number[] {\n  // Write your code here\n}",
+        testCases: [
+          {
+            input: [[1, 2, 3, 4, 5, 6]],
+            expected: [2, 4, 6],
+            description: "should filter even numbers",
+          },
+          {
+            input: [[1, 3, 5]],
+            expected: [],
+            description: "should return empty array when no even numbers",
+          },
+          {
+            input: [[2, 4, 6]],
+            expected: [2, 4, 6],
+            description: "should return same array when all numbers are even",
+          },
+          {
+            input: [[]],
+            expected: [],
+            description: "should handle empty arrays",
+          },
+        ],
+        conceptTags: ["arrays", "functions", "loops"],
+        timeLimit: 5000,
+        memoryLimit: 128,
+      },
+
+      // Functions challenges
+      {
+        title: "Create Greeter Function",
+        description:
+          "Create a greeter function that takes a name and returns a greeting message.",
+        difficulty: "easy",
+        language: "typescript",
+        functionName: "createGreeting",
+        parameterTypes: ["string"],
+        returnType: "string",
+        template:
+          "function createGreeting(name: string): string {\n  // Write your code here\n}",
+        testCases: [
+          {
+            input: ["John"],
+            expected: "Hello, John!",
+            description: "should greet John",
+          },
+          {
+            input: [""],
+            expected: "Hello, !",
+            description: "should handle empty name",
+          },
+        ],
+        conceptTags: ["functions", "strings"],
+        timeLimit: 5000,
+        memoryLimit: 128,
+      },
+
+      // Recursion challenges
+      {
+        title: "Calculate Factorial",
+        description:
+          "Create a recursive function to calculate the factorial of a number.",
+        difficulty: "medium",
+        language: "typescript",
+        functionName: "factorial",
+        parameterTypes: ["number"],
+        returnType: "number",
+        template:
+          "function factorial(n: number): number {\n  // Write your code here\n}",
+        testCases: [
+          { input: [5], expected: 120, description: "should calculate 5!" },
+          { input: [0], expected: 1, description: "should handle 0!" },
+          { input: [1], expected: 1, description: "should handle 1!" },
+        ],
+        conceptTags: ["recursion", "functions"],
+        timeLimit: 5000,
+        memoryLimit: 128,
+      },
+      {
+        title: "Calculate Fibonacci Number",
+        description:
+          "Create a recursive function to calculate the nth Fibonacci number.",
+        difficulty: "medium",
+        language: "typescript",
+        functionName: "fibonacci",
+        parameterTypes: ["number"],
+        returnType: "number",
+        template:
+          "function fibonacci(n: number): number {\n  // Write your code here\n}",
+        testCases: [
+          { input: [0], expected: 0, description: "should calculate fib(0)" },
+          { input: [1], expected: 1, description: "should calculate fib(1)" },
+          { input: [5], expected: 5, description: "should calculate fib(5)" },
+          {
+            input: [10],
+            expected: 55,
+            description: "should calculate fib(10)",
+          },
+        ],
+        conceptTags: ["recursion", "functions"],
+        timeLimit: 5000,
+        memoryLimit: 128,
+      },
+
+      // Type-specific challenges (TypeScript)
+      {
+        title: "Type-Safe Calculator",
+        description:
+          "Create a type-safe calculator function that performs basic operations.",
+        difficulty: "medium",
+        language: "typescript",
+        functionName: "calculate",
+        parameterTypes: ["number", "string", "number"],
+        returnType: "number",
+        template:
+          "function calculate(a: number, operation: string, b: number): number {\n  // Write your code here\n}",
+        testCases: [
+          {
+            input: [5, "+", 3],
+            expected: 8,
+            description: "should add numbers",
+          },
+          {
+            input: [5, "-", 3],
+            expected: 2,
+            description: "should subtract numbers",
+          },
+          {
+            input: [5, "*", 3],
+            expected: 15,
+            description: "should multiply numbers",
+          },
+          {
+            input: [6, "/", 3],
+            expected: 2,
+            description: "should divide numbers",
+          },
+        ],
+        conceptTags: ["type-annotations", "conditionals", "operators"],
+        timeLimit: 5000,
+        memoryLimit: 128,
+      },
+      {
+        title: "Create Type-Safe Person",
+        description:
+          "Create a function that returns a type-safe person object.",
+        difficulty: "medium",
+        language: "typescript",
+        functionName: "createPerson",
+        parameterTypes: ["string", "number"],
+        returnType: "{ name: string; age: number; isAdult: boolean }",
+        template:
+          "function createPerson(name: string, age: number): { name: string; age: number; isAdult: boolean } {\n  // Write your code here\n}",
+        testCases: [
+          {
+            input: ["Alice", 25],
+            expected: { name: "Alice", age: 25, isAdult: true },
+            description: "should create adult person",
+          },
+          {
+            input: ["Bob", 15],
+            expected: { name: "Bob", age: 15, isAdult: false },
+            description: "should create minor person",
+          },
+        ],
+        conceptTags: ["type-annotations", "objects", "conditionals"],
+        timeLimit: 5000,
+        memoryLimit: 128,
+      },
+      // Map Challenges
+      {
+        title: "Double the Numbers",
+        description:
+          "Create a function that takes an array of numbers and returns a new array with each number doubled.",
+        difficulty: "easy",
+        language: "typescript",
+        functionName: "doubleNumbers",
+        parameterTypes: ["number[]"],
+        returnType: "number[]",
+        template:
+          "function doubleNumbers(numbers: number[]): number[] {\n  // Write your code here\n}",
+        testCases: [
+          {
+            input: [[1, 2, 3, 4]],
+            expected: [2, 4, 6, 8],
+            description: "should double positive numbers",
+          },
+          {
+            input: [[-2, 0, 5]],
+            expected: [-4, 0, 10],
+            description: "should handle negative numbers and zero",
+          },
+          {
+            input: [[]],
+            expected: [],
+            description: "should handle empty arrays",
+          },
+        ],
+        conceptTags: ["functional-programming", "map", "arrays"],
+        timeLimit: 5000,
+        memoryLimit: 128,
+      },
+      {
+        title: "Convert to Uppercase",
+        description:
+          "Create a function that takes an array of strings and returns a new array with all strings converted to uppercase.",
+        difficulty: "easy",
+        language: "typescript",
+        functionName: "toUpperCase",
+        parameterTypes: ["string[]"],
+        returnType: "string[]",
+        template:
+          "function toUpperCase(strings: string[]): string[] {\n  // Write your code here\n}",
+        testCases: [
+          {
+            input: [["hello", "world"]],
+            expected: ["HELLO", "WORLD"],
+            description: "should convert lowercase strings to uppercase",
+          },
+          {
+            input: [["JavaScript", "TypeScript", "HTML"]],
+            expected: ["JAVASCRIPT", "TYPESCRIPT", "HTML"],
+            description: "should handle mixed case strings",
+          },
+          {
+            input: [[]],
+            expected: [],
+            description: "should handle empty arrays",
+          },
+        ],
+        conceptTags: ["functional-programming", "map", "strings"],
+        timeLimit: 5000,
+        memoryLimit: 128,
+      },
+
+      // Filter Challenges
+      {
+        title: "Even Numbers Only",
+        description:
+          "Create a function that takes an array of numbers and returns a new array containing only the even numbers.",
+        difficulty: "easy",
+        language: "typescript",
+        functionName: "filterEvenNumbers",
+        parameterTypes: ["number[]"],
+        returnType: "number[]",
+        template:
+          "function filterEvenNumbers(numbers: number[]): number[] {\n  // Write your code here\n}",
+        testCases: [
+          {
+            input: [[1, 2, 3, 4, 5, 6]],
+            expected: [2, 4, 6],
+            description: "should filter out odd numbers",
+          },
+          {
+            input: [[11, 13, 15]],
+            expected: [],
+            description: "should return empty array if no even numbers",
+          },
+          {
+            input: [[]],
+            expected: [],
+            description: "should handle empty arrays",
+          },
+        ],
+        conceptTags: ["functional-programming", "filter", "arrays"],
+        timeLimit: 5000,
+        memoryLimit: 128,
+      },
+      {
+        title: "Long Words",
+        description:
+          "Create a function that takes an array of strings and a minimum length, and returns a new array containing only strings that are longer than the specified length.",
+        difficulty: "easy",
+        language: "typescript",
+        functionName: "filterLongWords",
+        parameterTypes: ["string[]", "number"],
+        returnType: "string[]",
+        template:
+          "function filterLongWords(words: string[], minLength: number): string[] {\n  // Write your code here\n}",
+        testCases: [
+          {
+            input: [["apple", "banana", "kiwi", "strawberry"], 5],
+            expected: ["banana", "strawberry"],
+            description:
+              "should filter words shorter than the specified length",
+          },
+          {
+            input: [["cat", "dog", "rat"], 4],
+            expected: [],
+            description: "should return empty array if no words meet criteria",
+          },
+          {
+            input: [[], 3],
+            expected: [],
+            description: "should handle empty arrays",
+          },
+        ],
+        conceptTags: ["functional-programming", "filter", "strings"],
+        timeLimit: 5000,
+        memoryLimit: 128,
+      },
+
+      // Reduce Challenges
+      {
+        title: "Sum of Array",
+        description:
+          "Create a function that takes an array of numbers and returns the sum of all numbers in the array.",
+        difficulty: "easy",
+        language: "typescript",
+        functionName: "sumArray",
+        parameterTypes: ["number[]"],
+        returnType: "number",
+        template:
+          "function sumArray(numbers: number[]): number {\n  // Write your code here\n}",
+        testCases: [
+          {
+            input: [[1, 2, 3, 4, 5]],
+            expected: 15,
+            description: "should sum positive numbers",
+          },
+          {
+            input: [[-1, -2, 5]],
+            expected: 2,
+            description: "should handle negative numbers",
+          },
+          {
+            input: [[]],
+            expected: 0,
+            description: "should return 0 for empty arrays",
+          },
+        ],
+        conceptTags: ["functional-programming", "reduce", "arrays"],
+        timeLimit: 5000,
+        memoryLimit: 128,
+      },
+      {
+        title: "Find Maximum",
+        description:
+          "Create a function that takes an array of numbers and returns the maximum value in the array.",
+        difficulty: "easy",
+        language: "typescript",
+        functionName: "findMax",
+        parameterTypes: ["number[]"],
+        returnType: "number",
+        template:
+          "function findMax(numbers: number[]): number {\n  // Write your code here\n}",
+        testCases: [
+          {
+            input: [[5, 12, 8, 130, 44]],
+            expected: 130,
+            description: "should find maximum in array with positive numbers",
+          },
+          {
+            input: [[-10, -5, -2, -15]],
+            expected: -2,
+            description: "should find maximum in array with negative numbers",
+          },
+          {
+            input: [[]],
+            expected: null,
+            description: "should return null for empty arrays",
+          },
+        ],
+        conceptTags: ["functional-programming", "reduce", "arrays"],
+        timeLimit: 5000,
+        memoryLimit: 128,
+      },
+
+      // Combined Challenges (Using Multiple Functional Methods)
+      {
+        title: "Average of Even Numbers",
+        description:
+          "Create a function that takes an array of numbers and returns the average of all even numbers in the array.",
+        difficulty: "medium",
+        language: "typescript",
+        functionName: "averageOfEvenNumbers",
+        parameterTypes: ["number[]"],
+        returnType: "number",
+        template:
+          "function averageOfEvenNumbers(numbers: number[]): number {\n  // Write your code here\n}",
+        testCases: [
+          {
+            input: [[1, 2, 3, 4, 5, 6]],
+            expected: 4,
+            description: "should calculate average of even numbers only",
+          },
+          {
+            input: [[1, 3, 5, 7]],
+            expected: 0,
+            description: "should return 0 if no even numbers",
+          },
+          {
+            input: [[]],
+            expected: 0,
+            description: "should return 0 for empty arrays",
+          },
+        ],
+        conceptTags: ["functional-programming", "filter", "reduce", "arrays"],
+        timeLimit: 5000,
+        memoryLimit: 128,
+      },
+      {
+        title: "Word Length Map",
+        description:
+          "Create a function that takes an array of strings and returns an object where keys are the strings and values are their lengths.",
+        difficulty: "medium",
+        language: "typescript",
+        functionName: "wordLengthMap",
+        parameterTypes: ["string[]"],
+        returnType: "Record<string, number>",
+        template:
+          "function wordLengthMap(words: string[]): Record<string, number> {\n  // Write your code here\n}",
+        testCases: [
+          {
+            input: [["hello", "world", "javascript"]],
+            expected: { hello: 5, world: 5, javascript: 10 },
+            description: "should create a map of words and their lengths",
+          },
+          {
+            input: [["a", "", "xyz"]],
+            expected: { a: 1, "": 0, xyz: 3 },
+            description: "should handle empty strings",
+          },
+          {
+            input: [[]],
+            expected: {},
+            description: "should return empty object for empty arrays",
+          },
+        ],
+        conceptTags: ["functional-programming", "reduce", "objects"],
+        timeLimit: 5000,
+        memoryLimit: 128,
+      },
+      {
+        title: "Group By Length",
+        description:
+          "Create a function that takes an array of strings and groups them by their length.",
+        difficulty: "medium",
+        language: "typescript",
+        functionName: "groupByLength",
+        parameterTypes: ["string[]"],
+        returnType: "Record<number, string[]>",
+        template:
+          "function groupByLength(words: string[]): Record<number, string[]> {\n  // Write your code here\n}",
+        testCases: [
+          {
+            input: [["a", "ab", "abc", "cd", "def", "gh"]],
+            expected: { 1: ["a"], 2: ["ab", "cd", "gh"], 3: ["abc", "def"] },
+            description: "should group strings by their length",
+          },
+          {
+            input: [["hello", "world"]],
+            expected: { 5: ["hello", "world"] },
+            description: "should handle all strings of same length",
+          },
+          {
+            input: [[]],
+            expected: {},
+            description: "should return empty object for empty arrays",
+          },
+        ],
+        conceptTags: ["functional-programming", "reduce", "objects", "arrays"],
+        timeLimit: 5000,
+        memoryLimit: 128,
+      },
+
+      // Advanced Challenges
+      {
+        title: "Compose Functions",
+        description:
+          "Create a function that takes multiple functions as arguments and returns a new function that is the composition of the input functions (executes them from right to left).",
+        difficulty: "hard",
+        language: "typescript",
+        functionName: "compose",
+        parameterTypes: ["(...args: any[]) => any[]"],
+        returnType: "(...args: any[]) => any",
+        template:
+          "function compose(...functions: ((...args: any[]) => any)[]): (...args: any[]) => any {\n  // Write your code here\n}",
+        testCases: [
+          {
+            input: [
+              [
+                (x: number) => x + 1,
+                (x: number) => x * 2,
+                (x: number) => x - 3,
+              ],
+            ],
+            expected: 5,
+            testFunction:
+              "const result = compose(...input[0])(4); return result;",
+            description:
+              "should compose functions from right to left (4-3=1, 1*2=2, 2+1=3)",
+          },
+          {
+            input: [[]],
+            expected: "test",
+            testFunction:
+              "const result = compose(...input[0])('test'); return result;",
+            description:
+              "should return identity function when no functions provided",
+          },
+        ],
+        conceptTags: ["functional-programming", "higher-order-functions"],
+        timeLimit: 8000,
+        memoryLimit: 128,
+      },
+      {
+        title: "Curry Function",
+        description:
+          "Create a function that takes a function and returns a curried version of that function. Currying transforms a function of multiple arguments into a sequence of functions, each taking a single argument.",
+        difficulty: "hard",
+        language: "typescript",
+        functionName: "curry",
+        parameterTypes: ["(...args: any[]) => any", "number"],
+        returnType: "(...args: any[]) => any",
+        template:
+          "function curry(fn: (...args: any[]) => any, arity?: number): (...args: any[]) => any {\n  // Write your code here\n}",
+        testCases: [
+          {
+            input: [(a: number, b: number, c: number) => a + b + c, 3],
+            expected: 6,
+            testFunction:
+              "const curriedFn = curry(input[0], input[1]); return curriedFn(1)(2)(3);",
+            description: "should curry a function with the specified arity",
+          },
+          {
+            input: [(a: number, b: number) => a * b],
+            expected: 20,
+            testFunction:
+              "const curriedFn = curry(input[0]); return curriedFn(4)(5);",
+            description: "should infer arity from function when not specified",
+          },
+        ],
+        conceptTags: [
+          "functional-programming",
+          "higher-order-functions",
+          "currying",
+        ],
+        timeLimit: 8000,
+        memoryLimit: 128,
+      },
+      {
+        title: "Pipeline",
+        description:
+          "Create a function that takes an initial value and an array of functions, and passes the value through each function in the array from left to right.",
+        difficulty: "medium",
+        language: "typescript",
+        functionName: "pipeline",
+        parameterTypes: ["any", "((...args: any[]) => any)[]"],
+        returnType: "any",
+        template:
+          "function pipeline(initialValue: any, functions: ((...args: any[]) => any)[]): any {\n  // Write your code here\n}",
+        testCases: [
+          {
+            input: [
+              5,
+              [
+                (x: number) => x * 2,
+                (x: number) => x + 3,
+                (x: number) => x / 2,
+              ],
+            ],
+            expected: 6.5,
+            description: "should pass value through each function in order",
+          },
+          {
+            input: [
+              "hello",
+              [
+                (s: string) => s.toUpperCase(),
+                (s: string) => s + " world",
+                (s: string) => s.split(" ").join("-"),
+              ],
+            ],
+            expected: "HELLO-world",
+            description: "should work with string transformations",
+          },
+          {
+            input: [42, []],
+            expected: 42,
+            description:
+              "should return initial value when no functions provided",
+          },
+        ],
+        conceptTags: ["functional-programming", "higher-order-functions"],
+        timeLimit: 5000,
+        memoryLimit: 128,
+      },
+    ];
+
+    let created = 0;
+    let updated = 0;
+    let skipped = 0;
+
+    // Check for existing challenges to avoid duplicates
+    for (const challenge of challenges) {
+      const exists = await ChallengeModel.findOne({ title: challenge.title });
+
+      if (!exists) {
+        // Create new challenge
+        await ChallengeModel.create(challenge);
+        console.log(`✓ Created: ${challenge.title}`);
+        created++;
+      } else if (forceUpdate) {
+        // Update if forceUpdate is true
+        await ChallengeModel.findOneAndUpdate(
+          { title: challenge.title },
+          challenge,
+        );
+        console.log(`↻ Updated: ${challenge.title}`);
+        updated++;
+      } else {
+        console.log(`⤫ Skipped: ${challenge.title} (already exists)`);
+        skipped++;
+      }
+    }
+
+    console.log(`
+      Challenge seeding completed:
+      - Created: ${created}
+      - Updated: ${updated}
+      - Skipped: ${skipped}
+      - Total processed: ${challenges.length}
+    `);
+
+    process.exit(0);
+  } catch (error) {
+    console.error("Error seeding challenges:", error);
+    process.exit(1);
+  }
+};
+
+seedChallenges();
